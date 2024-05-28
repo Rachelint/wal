@@ -10,12 +10,6 @@ pub trait PageManager {
     /// Delete the target page.
     // FIX: Replace the `P`. 
     fn delete<P: AsRef<Path>>(&self, path: P);
-
-    /// Write the data to the target page.
-    fn write(&mut self, target: Self::Page, data: &[u8]);
-
-    /// Read the data in the target page to the `buf`.
-    fn read(&self, target: Self::Page, buf: &mut [u8]);
 }
 
 /// The storage unit.
@@ -26,3 +20,5 @@ pub trait Page {
     /// Write the data to the page.
     fn write(&mut self, data: &[u8]);
 }
+
+pub type PageId = u32;

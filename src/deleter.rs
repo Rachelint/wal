@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use crate::{options::SequenceNumber, page::{Page, PageManager}};
+use crate::{options::SequenceNumber,  storage::page_manager::{Page, PageManager}};
 
 // FIX: Redefine the membership of the `WalDeletionMarker`.
 // TODO: Make use of `HashSet` to record.

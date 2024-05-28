@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use crate::{deleter::WalDeletionMarker, log::LogEntry, options::SequenceNumber, page::{Page, PageManager}, reader::LogReader, writer::LogWriter};
+use crate::{deleter::WalDeletionMarker, log::LogEntry, options::SequenceNumber, storage::page_manager::{Page, PageManager}, reader::LogReader, writer::LogWriter};
 
 pub struct WalManager<P: Page, M: PageManager> {
     sequence_num: SequenceNumber,
@@ -11,11 +11,6 @@ pub struct WalManager<P: Page, M: PageManager> {
 
 impl<P: Page, M: PageManager> WalManager<P, M> {
     pub fn new() -> WalManager<P, M> {
-        unimplemented!()
-    }
-
-    /// Get the current sequence number.
-    pub fn sequence_number(&self) -> SequenceNumber {
         unimplemented!()
     }
 

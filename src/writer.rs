@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use crate::page::{Page, PageManager};
+use crate::storage::page_manager::{Page, PageManager};
 use crate::log::LogEntry;
 
 use std::sync::{Arc, Mutex};
@@ -8,8 +8,12 @@ use std::sync::{Arc, Mutex};
 /// The `LogWriter` is designed to append the logs to the page.
 pub struct LogWriter<P: Page, M: PageManager> {
     dest: Arc<Mutex<P>>,
+    
     creator: M,
     // TODO: Calculate the `checksum` with `crc`.
+    
+    // I think it is not the thing should be cared in a general wal crate?
+    // As I see, maybe better for specific app to consider that?
     checksum: u32, 
 }
 
@@ -23,6 +27,9 @@ impl<P: Page, M: PageManager> LogWriter<P, M> {
         unimplemented!()
     } 
 
+    // Comment(kamille):
+    // I think flush should be a specific behavior of file system wal?
+    // Not so good to expose it in logic layer?    
     pub fn flush(&mut self) {
         unimplemented!()
     }
