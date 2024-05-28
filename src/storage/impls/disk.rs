@@ -2,7 +2,7 @@
 
 use std::fs::File;
 
-use crate::page::{Page, PageManager};
+use crate::storage::page_manager::{Page, PageManager};
 
 struct FileSystem;
 

@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use std::fs::Metadata;
+
 use bytes::Bytes;
 
 use crate::options::SequenceNumber;
@@ -24,9 +26,26 @@ pub enum RecordType {
 ///        The type is used to group a bunch of records together to represent
 ///        blocks that are larger than kBlockSize
 /// Payload = Byte stream as long as specified by the payload size
+
+// Comment(kamille):
+// I think it may be better to be a trait? for example:
+// pub trait LogEntry {
+//     // Somethings like `sequence_num`, `table_id` can be place in MetaData.
+//     type MetaData: Send + 'static;
+    
+//     /// Get meta data part of the log entry.
+//     fn metadata(&self) -> Metadata;
+    
+//     /// Encode the log entry(include data and metadata) to bytes.
+//     fn to_bytes(&self) -> Vec<u8>;
+
+//     /// Decode from bytes
+//     fn from_bytes(raw: Vec<u8>);
+// }
+
 pub struct LogEntry {
     sequence_num: SequenceNumber,
-    data: Vec<u8>,
+    payload: Vec<u8>,
 }
 
 impl LogEntry {
