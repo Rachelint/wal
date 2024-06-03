@@ -1,21 +1,17 @@
 #![allow(dead_code)]
 
-use crate::{deleter::WalDeletionMarker, log::LogEntry, options::SequenceNumber, page::{Page, PageManager}, reader::LogReader, writer::LogWriter};
+use crate::{cleaner::LogCleaner, log::{LogEntry, SequenceNumber}, meta_data::MetaDataStore, reader::LogReader, storage::page_manager::{Page, PageManager}, writer::LogWriter};
 
-pub struct WalManager<P: Page, M: PageManager> {
+// TODO: Make the `WalManager` more general.
+pub struct WalManager<P: Page, M: PageManager, T: MetaDataStore> {
     sequence_num: SequenceNumber,
     writer: LogWriter<P, M>,
     reader: LogReader,
-    deletion_marker: WalDeletionMarker<P, M>,
+    cleaner: LogCleaner<M, T>,
 }
 
-impl<P: Page, M: PageManager> WalManager<P, M> {
-    pub fn new() -> WalManager<P, M> {
-        unimplemented!()
-    }
-
-    /// Get the current sequence number.
-    pub fn sequence_number(&self) -> SequenceNumber {
+impl<P: Page, M: PageManager, T: MetaDataStore> WalManager<P, M, T> {
+    pub fn new() -> WalManager<P, M, T> {
         unimplemented!()
     }
 
@@ -26,7 +22,7 @@ impl<P: Page, M: PageManager> WalManager<P, M> {
 
     /// Append the logs to the underlying storage.
     // TODO: Implement `write_batch()`.
-    pub fn write(&mut self, _log: LogEntry) {
+    pub fn write<L: LogEntry>(&mut self, _log: L) {
         unimplemented!()
     }
 
