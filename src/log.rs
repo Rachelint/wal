@@ -1,8 +1,18 @@
 #![allow(dead_code)]
 
-use bytes::Bytes;
+/// An abstract appended log.
+pub trait LogEntry {
+    type MetaData;
 
-use crate::options::SequenceNumber;
+    /// Get the metadata part of the log entry.
+    fn metadata(&self) -> Self::MetaData;
+
+    /// Encode the log entry (include the data and metadata) to bytes.
+    fn to_bytes(&self) -> Vec<u8>;
+
+    /// Decode from bytes.
+    fn from_bytes(raw: Vec<u8>) -> Self;
+}
 
 pub enum RecordType {
     Full = 1, 
@@ -10,6 +20,9 @@ pub enum RecordType {
     Middle = 3,
     Last = 4,
 }
+
+// TODO: Put this type in a better place.
+pub type SequenceNumber = u64;
 
 /// **Legacy Record Format**
 /// ```text
@@ -23,22 +36,25 @@ pub enum RecordType {
 ///        (kZeroType, kFullType, kFirstType, kLastType, kMiddleType)
 ///        The type is used to group a bunch of records together to represent
 ///        blocks that are larger than kBlockSize
-/// Payload = Byte stream as long as specified by the payload size
-pub struct LogEntry {
+/// Payload = Byte stream as long as specified by the payload size 
+// TODO: Should we create a new folder for different implementation for `LogEntry`?
+pub struct LegacyLogEntry {
     sequence_num: SequenceNumber,
-    data: Vec<u8>,
+    payload: Vec<u8>,
 }
 
-impl LogEntry {
-    pub fn new() -> LogEntry {
+impl LogEntry for LegacyLogEntry {
+    type MetaData = SequenceNumber;
+
+    fn metadata(&self) -> Self::MetaData {
+        unimplemented!() 
+    }
+
+    fn from_bytes(_raw: Vec<u8>) -> Self {
         unimplemented!()
     }
 
-    pub fn encode(&self) -> Bytes {
-        unimplemented!()
-    }
-
-    pub fn decode(&self, _data: &[u8]) -> LogEntry {
-        unimplemented!()
+    fn to_bytes(&self) -> Vec<u8> {
+        unimplemented!() 
     }
 }

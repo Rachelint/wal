@@ -1,11 +1,10 @@
-mod deleter;
-mod disk;
+mod storage;
 mod log;
 mod manager;
-mod options;
-mod page;
 mod reader;
 mod writer;
+mod meta_data;
+mod cleaner;
 
 fn main() {
     println!("Hello, World!");
